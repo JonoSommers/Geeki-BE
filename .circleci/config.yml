@@ -3,6 +3,10 @@ executors:
   ruby-executor:
     docker:
       - image: cimg/ruby:3.1
+      - image: cimg/postgres:13.4
+        environment:
+          POSTGRES_USER: root
+          POSTGRES_DB: test_db
     working_directory: ~/project
     environment:
       BUNDLE_PATH: vendor/bundle
@@ -22,6 +26,11 @@ jobs:
           paths:
             - vendor/bundle
           key: ruby-bundle-v1-{{ checksum "Gemfile.lock" }}
+      - run:
+          name: Set up test database
+          command: |
+            cp config/database.yml.ci config/database.yml
+            RAILS_ENV=test bundle exec rails db:create db:schema:load
       - run:
           name: Run tests
           command: bundle exec rspec
