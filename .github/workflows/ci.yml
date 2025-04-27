@@ -82,12 +82,15 @@ jobs:
           ruby-version: .ruby-version
           bundler-cache: true
   
-      - name: Run tests
+      - name: Install dependencies
+        run: bundle install
+
+      - name: Set up database
         env:
-          RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/test_db
         run: |
           bin/rails db:create
-          bin/rails db:schema:load
-          bin/rails test test:system
+          bin/rails db:migrate
 
+      - name: Run tests
+        run: bin/rails test test:system
