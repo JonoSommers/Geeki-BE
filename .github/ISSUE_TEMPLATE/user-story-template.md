@@ -1,7 +1,7 @@
 ---
 name: User Story Template
 about: Describe the User Story to make creating sub-issues easier.
-title: User Story Outline
+title: 'User Story | '
 labels: ''
 assignees: ''
 

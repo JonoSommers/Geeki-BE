@@ -1,7 +1,7 @@
 ---
 name: Issue Template
 about: Create detailed, easy to follow issues, following this outline.
-title: Issue Outline
+title: Issue |
 labels: ''
 assignees: ''
 
