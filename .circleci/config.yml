@@ -1,18 +1,19 @@
 version: 2.1
 orbs:
   ruby: circleci/ruby@2.0.1
+
 jobs:
   test-ruby:
     docker:
-      - image: cimg/ruby:3.2.2-node
-      - image: circleci/postgres:9.5-alpine
+      - image: cimg/ruby:3.2.2-node  # your app
+      - image: cimg/postgres:14.8  # updated Postgres service
         environment:
-          POSTGRES_USER: root
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: password
           POSTGRES_DB: test_db
-          POSTGRES_HOST_AUTH_METHOD: trust
     environment:
       RAILS_ENV: test
-      DATABASE_URL: postgres://root@localhost:5432/test_db
+      DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
     steps:
       - checkout
       - ruby/install-deps
@@ -26,6 +27,7 @@ jobs:
       - run:
           name: rspec test
           command: bundle exec rspec
+
   deploy:
     docker:
       - image: cimg/base:stable
@@ -33,6 +35,7 @@ jobs:
       - run:
           name: deploy
           command: '#e.g. ./deploy.sh'
+
 workflows:
   build-and-test:
     jobs:
