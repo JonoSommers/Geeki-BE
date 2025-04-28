@@ -48,7 +48,6 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "pry"
   gem "rspec-rails"
-  gem "shoulda-matchers"
   gem "factory_bot_rails"
   gem "faker"
 
@@ -70,4 +69,5 @@ group :test do
   gem "selenium-webdriver"
   gem "webmock"
   gem "vcr"
+  gem 'shoulda-matchers', '~> 5.0'
 end
