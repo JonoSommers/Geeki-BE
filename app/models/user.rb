@@ -4,4 +4,4 @@ class User < ApplicationRecord
     has_many :games, through: :user_games
 
     validates :username, presence: true, uniqueness: true
-end  
+end
