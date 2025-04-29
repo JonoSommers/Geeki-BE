@@ -1,13 +1,8 @@
 class ErrorSerializer
-    def self.from_active_record(record)
+    def self.format_error(error_message)
         {
-        errors: record.errors.map do |error|
-            {
-            status: "422",
-            title: "Unprocessable Entity",
-            detail: "#{error.attribute.to_s.titleize} #{error.message}"
-            }
-        end
+        message: error_message.message,
+        status: error_message.status_code
         }
     end
 end

@@ -1,12 +1,9 @@
-class ApplicationController < ActionController::Base
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  allow_browser versions: :modern
-
+class ApplicationController < ActionController::API
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   private
 
   def render_not_found(error)
-    render json: ErrorSerializer.new(error).serialize, status: :not_found
+    render json: ErrorSerializer.format_error(ErrorMessage.new(error.message, 422)), status: :not_found
   end
 end
