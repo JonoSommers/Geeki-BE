@@ -5,15 +5,31 @@ RSpec.describe "Users API", type: :request do
         @user = create(:user)
     end
 
+
     describe "Show User Endpoint" do
-        it "Finds a specific user by their ID." do
-            get api_v1_user_path(@user.id), as: :json
+        describe 'Happy Paths' do
+            it "Finds a specific user by their ID." do
+                get api_v1_user_path(@user.id), as: :json
 
-            json = JSON.parse(response.body, symbolize_names: true)
+                json = JSON.parse(response.body, symbolize_names: true)
 
-            expect(response.status).to eq(200)
-            expect(json[:data][:id]).to eq(@user.id.to_s)
-            expect(json[:data][:attributes][:username]).to eq(@user.username)
+                expect(response.status).to eq(200)
+                expect(json[:data][:id]).to eq(@user.id.to_s)
+                expect(json[:data][:attributes][:username]).to eq(@user.username)
+            end
+        end
+
+        describe 'Sad Paths' do
+            it 'Throws an error message when a user cannot be found.' do
+                get api_v1_user_path(1000), as: :json
+
+                json = JSON.parse(response.body, symbolize_names: true)
+
+                expect(response.status).to eq(404)
+
+                expect(json[:message]).to eq("Couldn't find User with 'id'=1000")
+                expect(json[:status]).to eq(404)
+            end
         end
     end
 end
