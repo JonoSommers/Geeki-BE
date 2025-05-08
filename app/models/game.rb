@@ -11,4 +11,14 @@ class Game < ApplicationRecord
     validates :summary, presence: true
     validates :image_url, presence: true
     validates :rating, presence: true
+    validates :vote_count, presence: true
+
+    def update_vote_count(direction, game)
+        case direction
+        when "up"
+            game.increment!(:vote_count)
+        when "down"
+            game.decrement!(:vote_count)
+        end
+    end
 end
