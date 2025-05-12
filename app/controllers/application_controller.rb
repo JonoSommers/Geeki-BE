@@ -14,7 +14,7 @@ class ApplicationController < ActionController::API
     render json: ErrorSerializer.format_error(ErrorMessage.new(error.message, 422)), status: :unprocessable_entity
   end
 
-  def missing_parameter(errpr)
+  def missing_parameter(error)
     render json: ErrorSerializer.format_error(ErrorMessage.new(error.message, 400)), status: :bad_request
   end
 end

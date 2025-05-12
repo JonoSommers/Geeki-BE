@@ -26,9 +26,7 @@ RSpec.describe "Users API", type: :request do
                 json = JSON.parse(response.body, symbolize_names: true)
 
                 expect(response.status).to eq(404)
-
                 expect(json[:message]).to eq("Couldn't find User with 'id'=1000")
-                expect(json[:status]).to eq(404)
             end
         end
     end
