@@ -32,4 +32,17 @@ RSpec.describe "Users API", type: :request do
             end
         end
     end
+
+    describe "Create User Endpoint" do
+        describe 'Happy Paths' do
+            it 'Should successfully create a new user.' do
+                post api_v1_users_path, params: { username: "test_user" }, as: :json
+
+                json = JSON.parse(response.body, symbolize_names: true)
+
+                expect(response.status).to eq(200)
+                expect(json[:data][:attributes][:username]).to eq("test_user")
+            end
+        end
+    end
 end
