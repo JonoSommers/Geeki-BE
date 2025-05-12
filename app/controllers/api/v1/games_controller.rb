@@ -1,7 +1,8 @@
 class Api::V1::GamesController < ApplicationController
     def update
         game = Game.find(params[:id])
-        game.update_vote_count(params[:direction], game)
+        direction = params.require(:direction)
+        game.update_vote_count(direction, game)
         render json: GameSerializer.new(game)
     end
 end
