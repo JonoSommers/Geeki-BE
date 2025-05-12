@@ -46,7 +46,7 @@ RSpec.describe "Users API", type: :request do
         describe 'Sad Paths' do
             it 'Throws an error message if a username already exists in the database.' do
                 post api_v1_users_path, params: { username: @user.username }, as: :json
-                
+
                 json = JSON.parse(response.body, symbolize_names: true)
 
                 expect(response.status).to eq(422)
@@ -55,7 +55,7 @@ RSpec.describe "Users API", type: :request do
 
             it 'Throws an error when trying to create an account with an empty username.' do
                 post api_v1_users_path, params: { username: "" }, as: :json
-                
+
                 json = JSON.parse(response.body, symbolize_names: true)
 
                 expect(response.status).to eq(422)

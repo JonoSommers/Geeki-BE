@@ -50,6 +50,6 @@ RSpec.describe "Games API", type: :request do
                 expect(response.status).to eq(400)
                 expect(json[:message]).to eq("param is missing or the value is empty or invalid: direction")
             end
-        end 
+        end
     end
 end
