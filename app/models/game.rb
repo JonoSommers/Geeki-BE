@@ -9,7 +9,7 @@ class Game < ApplicationRecord
 
     validates :name, presence: true
     validates :summary, presence: true
-    validates :image_url, presence: true
+    validates :img_url, presence: true
     validates :rating, presence: true
     validates :vote_count, presence: true
 
