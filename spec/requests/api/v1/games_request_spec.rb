@@ -7,14 +7,28 @@ RSpec.describe "Games API", type: :request do
 
     describe "Update Game Endpoint" do
         describe 'Happy Paths' do
-            it "Updates the vote count for a game based." do
-                patch api_v1_games_path(@game.id), as: :json
+            it "Increased the vote count for a game if param[:direction] is up." do
+                patch api_v1_game_path(@game.id), params: { direction: "up" }, as: :json
 
                 json = JSON.parse(response.body, symbolize_names: true)
 
+                @game.reload
+
                 expect(response.status).to eq(200)
-                expect(json[:data][:id]).to eq(@gane.id.to_s)
-                expect(json[:data][:vote_count]).to eq(@games.vote_count + 1)
+                expect(json[:data][:id]).to eq(@game.id.to_s)
+                expect(json[:data][:attributes][:vote_count]).to eq(@game.vote_count)
+            end
+
+            it "Decreases the vote count for a game if param[:direction] is down." do
+                patch api_v1_game_path(@game.id), params: { direction: "down" }, as: :json
+
+                json = JSON.parse(response.body, symbolize_names: true)
+
+                @game.reload
+
+                expect(response.status).to eq(200)
+                expect(json[:data][:id]).to eq(@game.id.to_s)
+                expect(json[:data][:attributes][:vote_count]).to eq(@game.vote_count)
             end
         end
     end
