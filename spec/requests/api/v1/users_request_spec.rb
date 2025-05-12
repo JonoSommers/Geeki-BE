@@ -35,13 +35,33 @@ RSpec.describe "Users API", type: :request do
 
     describe "Create User Endpoint" do
         describe 'Happy Paths' do
-            it 'Should successfully create a new user.' do
+            it 'Creates a new user.' do
                 post api_v1_users_path, params: { username: "test_user" }, as: :json
 
                 json = JSON.parse(response.body, symbolize_names: true)
 
                 expect(response.status).to eq(200)
                 expect(json[:data][:attributes][:username]).to eq("test_user")
+            end
+        end
+
+        describe 'Sad Paths' do
+            it 'Throws an error message if a username already exists in the database.' do
+                post api_v1_users_path, params: { username: @user.username }, as: :json
+                
+                json = JSON.parse(response.body, symbolize_names: true)
+
+                expect(response.status).to eq(422)
+                expect(json[:message]).to eq("Validation failed: Username has already been taken")
+            end
+
+            it 'Throws an error when trying to create an account with an empty username.' do
+                post api_v1_users_path, params: { username: "" }, as: :json
+                
+                json = JSON.parse(response.body, symbolize_names: true)
+
+                expect(response.status).to eq(422)
+                expect(json[:message]).to eq("Validation failed: Username can't be blank")
             end
         end
     end
