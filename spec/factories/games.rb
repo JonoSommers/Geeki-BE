@@ -8,5 +8,6 @@ FactoryBot.define do
     theme { "MyString" }
     franchises { "MyString" }
     img_url { "MyString" }
+    vote_count { "MyString" }
   end
 end
