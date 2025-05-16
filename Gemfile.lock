@@ -144,7 +144,7 @@ GEM
     json (2.11.3)
     jsonapi-serializer (2.2.0)
       activesupport (>= 4.2)
-    kamal (2.6.0)
+    kamal (2.6.1)
       activesupport (>= 7.0)
       base64 (~> 0.2)
       bcrypt_pbkdf (~> 1.0)
